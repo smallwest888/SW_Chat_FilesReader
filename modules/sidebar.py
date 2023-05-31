@@ -11,12 +11,12 @@ class Sidebar:
 
     @staticmethod
     def reset_chat_button():
-        if st.button("Reset chat"):
+        if st.button("重置聊天"):
             st.session_state["reset_chat"] = True
         st.session_state.setdefault("reset_chat", False)
 
     def show_options(self):
-        with st.sidebar.expander("Reset", expanded=False):
+        with st.sidebar.expander("危险区", expanded=False):
 
             self.reset_chat_button()
 
