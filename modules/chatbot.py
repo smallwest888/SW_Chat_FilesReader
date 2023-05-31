@@ -4,9 +4,11 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.prompts.prompt import PromptTemplate
 from langchain.callbacks import get_openai_callback
 
-#fix Error: module 'langchain' has no attribute 'verbose'
+# fix Error: module 'langchain' has no attribute 'verbose'
 import langchain
+
 langchain.verbose = False
+
 
 class Chatbot:
 
@@ -15,11 +17,10 @@ class Chatbot:
         self.temperature = temperature
         self.vectors = vectors
 
-    qa_template = """
-        If you don't know the answer, just say you don't know. Do NOT try to make up an answer.
-        If the question is not related to the context, politely respond that you are tuned to only answer questions that are related to the context.
-        Use as much detail as possible when responding.
-        Answer questions using the language of the document.
+    qa_template = """If you don't know the answer, just say you don't know. Do NOT try to make up an answer. If the 
+    question is not related to the context, politely respond that you are tuned to only answer questions that are 
+    related to the context. Use as much detail as possible when responding. Answer questions using the language of 
+    the document.
 
         context: {context}
         =========
@@ -27,23 +28,22 @@ class Chatbot:
         ======
         """
 
-    QA_PROMPT = PromptTemplate(template=qa_template, input_variables=["context","question" ])
+    QA_PROMPT = PromptTemplate(template=qa_template, input_variables=["context", "question"])
 
     def conversational_chat(self, query):
-
         llm = ChatOpenAI(model_name=self.model_name, temperature=self.temperature)
 
         retriever = self.vectors.as_retriever()
 
-
         chain = ConversationalRetrievalChain.from_llm(llm=llm,
-            retriever=retriever, verbose=True, return_source_documents=True, combine_docs_chain_kwargs={'prompt': self.QA_PROMPT})
+                                                      retriever=retriever, verbose=True, return_source_documents=True,
+                                                      combine_docs_chain_kwargs={'prompt': self.QA_PROMPT})
 
         chain_input = {"question": query, "chat_history": st.session_state["history"]}
         result = chain(chain_input)
 
         st.session_state["history"].append((query, result["answer"]))
-        #count_tokens_chain(chain, chain_input)
+        # count_tokens_chain(chain, chain_input)
         return result["answer"]
 
 
@@ -51,7 +51,4 @@ def count_tokens_chain(chain, query):
     with get_openai_callback() as cb:
         result = chain.run(query)
         st.write(f'###### Tokens used in this conversation : {cb.total_tokens} tokens')
-    return result 
-
-    
-    
+    return result

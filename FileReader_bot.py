@@ -29,7 +29,7 @@ Layout = layout_module.Layout
 Utilities = utils_module.Utilities
 Sidebar = sidebar_module.Sidebar
 
-st.set_page_config(layout="wide", page_icon="💬", page_title="SW-FileReader 🤖")
+st.set_page_config(layout="wide", page_icon="💬", page_title="IPRO-FileReader 🤖")
 
 # Instantiate the main components
 layout, sidebar, utils = Layout(), Sidebar(), Utilities()
@@ -48,11 +48,10 @@ if uploaded_file:
     # Initialize chat history
     history = ChatHistory()
     try:
-        st.write("Before setting up chatbot")
+        st.write("启动中")
         chatbot = utils.setup_chatbot(
             uploaded_file
         )
-        st.write("After setting up chatbot")
         st.session_state["chatbot"] = chatbot
 
         if st.session_state["ready"]:
