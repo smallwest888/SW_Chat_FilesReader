@@ -30,9 +30,7 @@ class Chatbot:
     QA_PROMPT = PromptTemplate(template=qa_template, input_variables=["context","question" ])
 
     def conversational_chat(self, query):
-        """
-        Start a conversational chat with a model via Langchain
-        """
+
         llm = ChatOpenAI(model_name=self.model_name, temperature=self.temperature)
 
         retriever = self.vectors.as_retriever()

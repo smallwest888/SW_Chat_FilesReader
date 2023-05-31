@@ -2,7 +2,7 @@ import streamlit as st
 
 class Sidebar:
 
-    MODEL_OPTIONS = "gpt-3.5-turbo"
+    MODEL_OPTIONS = "gpt-3.5-turbo-0301"
     TEMPERATURE_MIN_VALUE = 0.0
     TEMPERATURE_MAX_VALUE = 1.0
     TEMPERATURE_DEFAULT_VALUE = 0.0
@@ -11,12 +11,12 @@ class Sidebar:
 
     @staticmethod
     def reset_chat_button():
-        if st.button("Reset chat"):
+        if st.button("重置"):
             st.session_state["reset_chat"] = True
         st.session_state.setdefault("reset_chat", False)
 
     def show_options(self):
-        with st.sidebar.expander("Reset", expanded=False):
+        with st.sidebar.expander("危险区", expanded=False):
 
             self.reset_chat_button()
 
