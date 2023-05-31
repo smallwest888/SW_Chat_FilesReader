@@ -48,10 +48,11 @@ if uploaded_file:
     # Initialize chat history
     history = ChatHistory()
     try:
-        st.write("启动中")
+        st.write("Before setting up chatbot")
         chatbot = utils.setup_chatbot(
             uploaded_file
         )
+        st.write("After setting up chatbot")
         st.session_state["chatbot"] = chatbot
 
         if st.session_state["ready"]:

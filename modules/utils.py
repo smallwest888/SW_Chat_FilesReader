@@ -1,9 +1,10 @@
 import os
+import pandas as pd
 import streamlit as st
+import pdfplumber
 
 from modules.chatbot import Chatbot
 from modules.embedder import Embedder
-
 
 class Utilities:
 
@@ -15,18 +16,19 @@ class Utilities:
         """
         uploaded_file = st.sidebar.file_uploader("upload", type=file_types, label_visibility="collapsed")
         if uploaded_file is not None:
+
             def get_file_extension(uploaded_file):
                 return os.path.splitext(uploaded_file)[1].lower()
-
+            
             file_extension = get_file_extension(uploaded_file.name)
 
             # Show the contents of the file based on its extension
-            # if file_extension == ".csv" :
+            #if file_extension == ".csv" :
             #    show_csv_file(uploaded_file)
 
         st.session_state["reset_chat"] = True
 
-        # print(uploaded_file)
+        #print(uploaded_file)
         return uploaded_file
 
     @staticmethod
@@ -35,12 +37,12 @@ class Utilities:
         Sets up the chatbot with the uploaded file, model, and temperature
         """
         # Set a fixed model and temperature
-        model = "gpt-3.5-turbo-0301"
+        model = "gpt-3.5-turbo"
         temperature = 0.5
 
         embeds = Embedder()
 
-        with st.spinner("处理中..."):
+        with st.spinner("Processing..."):
             uploaded_file.seek(0)
             file = uploaded_file.read()
             # Get the document embeddings for the uploaded file
@@ -51,3 +53,7 @@ class Utilities:
         st.session_state["ready"] = True
 
         return chatbot
+
+
+
+    
